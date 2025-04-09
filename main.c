@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include "estructuras.c"
 #define MAX_DESC 300
-
 
 typedef struct {
     int id;
