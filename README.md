@@ -51,7 +51,6 @@ Si estás usando VSCode, asegúrate de compilar *ambos* archivos (`main.c` y `es
 | 0      | ✅        | Finaliza el programa correctamente. |
 
 ### Posibles errores conocidos:
-- Si se omite limpiar el buffer antes de ingresar texto (`fgets`), puede aparecer una descripción mal leída.
 - Si el programa se compila solo con `main.c`, mostrará errores de funciones no definidas (`undefined reference`).  
   **Solución:** compilar con `estructuras.c` también.
 
@@ -85,4 +84,7 @@ Ticket procesado y eliminado de la cola.
 
 --- MENÚ PRINCIPAL ---
 0. Salir
+Saliendo del programa...
+Liberando memoria de tickets restantes.
+Fin del programa!
 ```
