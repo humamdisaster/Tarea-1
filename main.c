@@ -27,13 +27,13 @@ void formatTime(time_t time, char *buffer, size_t bufferSize) {
     strftime(buffer, bufferSize, TIME_FORMAT, tm_info);
 }
 
-void mostrarDetallesTicket(Ticket *t){
-    if (t == NULL) return;
+void mostrarDetallesTicket(Ticket *ticketProcesado) {
+    if (ticketProcesado == NULL) return;
     char buffer[TIME_BUFFER_SIZE];
-    formatTime(t->horaRegistro, buffer, sizeof(buffer));
-    printf("ID: %d\n", t->id);
-    printf("Descripcion: %s\n", t->descripcion);
-    printf("Prioridad: %s\n", t->prioridad);
+    formatTime(ticketProcesado->horaRegistro, buffer, sizeof(buffer));
+    printf("ID: %d\n", ticketProcesado->id);
+    printf("Descripcion: %s\n", ticketProcesado->descripcion);
+    printf("Prioridad: %s\n", ticketProcesado->prioridad);
     printf("Hora de Registro: %s\n", buffer);
     printf("------------------------------------\n");
 }
@@ -48,7 +48,7 @@ void registrarTicket(){
     char bufferDesc[MAX_DESC];
     nuevoTicket->id = proxId++;
 
-    printf("Ingrese la descripcion del ticket (máximo 300 carácteres): ");
+    printf("Ingrese la descripcion del ticket (maximo 300 caracteres): ");
     if (fgets(bufferDesc, sizeof(bufferDesc), stdin) != NULL) {
         bufferDesc[strcspn(bufferDesc, "\n")] = '\0'; // Eliminar el salto de línea
     }
@@ -63,7 +63,7 @@ void registrarTicket(){
 
     push_queue(colaBajo, nuevoTicket);
 
-    printf("\nTicket registrado con éxito!\n");
+    printf("\nTicket registrado con exito!\n");
     mostrarDetallesTicket(nuevoTicket);
 }
 
@@ -157,7 +157,7 @@ void buscarYMostrarTicketPorId(){
         printf("Ticket encontrado:\n");
         mostrarDetallesTicket(ticketEncontrado);
     } else {
-        printf("No se encontró un ticket con ID %d.\n", idBuscar);
+        printf("Error: No se encontro un ticket con ID %d.\n", idBuscar);
     }
     printf("\n");
 }
@@ -193,7 +193,7 @@ void asignarPrioridad(){
     } else if (strcmp(nuevaPrioridad, "Baja") == 0) {
         colaDestino = colaBajo;
     } else {
-        printf("Prioridad no válida. Debe ser Alta, Media o Baja.\n");
+        printf("Prioridad no valida. Debe ser Alta, Media o Baja.\n");
         return;
     }
 
@@ -224,7 +224,7 @@ void asignarPrioridad(){
         printf("Ticket con ID %d modificado a prioridad %s.\n", idTicket, nuevaPrioridad);
         mostrarDetallesTicket(ticketEncontrado);
     } else {
-        printf("No se encontró un ticket con ID %d.\n", idTicket);
+        printf("No se encontro un ticket con ID %d.\n", idTicket);
     }
 }
 
@@ -254,21 +254,21 @@ int main(){
         return 1;
     }
     printf("=============================================\n");
-    printf(" Sistema de Gestión de Tickets de Soporte\n");
+    printf(" Sistema de Gestion de Tickets de Soporte\n");
     printf("=============================================\n");
 
     do{
-        printf("\n--- MENÚ PRINCIPAL ---\n");
+        printf("--- MENU PRINCIPAL ---\n");
         printf("1. Registrar nuevo ticket\n");
         printf("2. Asignar prioridad a ticket\n");
         printf("3. Mostrar tickets pendientes\n");
         printf("4. Procesar siguiente ticket\n");
         printf("5. Buscar ticket por ID\n");
         printf("0. Salir\n");
-        printf("Seleccione una opción: ");
+        printf("Seleccione una opcion: ");
 
         if (scanf("%d", &opcion) != 1) {
-            printf("Opción inválida. Por favor, ingrese un número.\n");
+            printf("Opcion invalida. Por favor, ingrese un numero.\n");
             getchar();
             continue;
         }
