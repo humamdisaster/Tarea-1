@@ -19,7 +19,7 @@ Asegúrate de tener todos estos archivos en la misma carpeta:
 
 ### 3. Compilar y ejecutar (Ejemplo con GCC)
 
-**En terminal:**
+**En terminal bash:**
 ```bash
 gcc main.c estructuras.c -o tarea1
 ./tarea1
