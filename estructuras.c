@@ -115,10 +115,6 @@ void* previous(List* list) {
 
 // --------------------- COLA ---------------------
 
-struct Queue {
-    List* list;
-};
-
 Queue* createQueue() {
     Queue* q = (Queue*)malloc(sizeof(Queue));
     q->list = createList();

@@ -20,6 +20,10 @@ void* previous(List* list);
 
 // --------------------- COLA ---------------------
 
+struct Queue {
+    List* list;
+};
+
 typedef struct Queue Queue;
 
 Queue* createQueue();
