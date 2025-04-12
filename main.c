@@ -51,6 +51,9 @@ void registrarTicket(){
     printf("Ingrese la descripcion del ticket (maximo 300 caracteres): ");
     if (fgets(bufferDesc, sizeof(bufferDesc), stdin) != NULL) {
         bufferDesc[strcspn(bufferDesc, "\n")] = '\0'; // Eliminar el salto de línea
+        strncpy(nuevoTicket->descripcion, bufferDesc, MAX_DESC);
+        nuevoTicket->descripcion[MAX_DESC - 1] = '\0'; // Asegurarse de que la cadena esté terminada en nulo
+
     }
     else{
         printf("Error al leer la descripcion del ticket.\n");
@@ -242,7 +245,7 @@ void liberarColas(){
     }
 }
 
-int main(){
+int main(){  //menú principal
     int opcion;
 
     colaAlto = createQueue();
