@@ -361,7 +361,7 @@ int main(){
     colaBajo = createQueue();
 
     if (colaAlto == NULL || colaMedio == NULL || colaBajo == NULL) {
-        printf("Error critico al crear las colas. Saliendo.\n");
+        printf("Error al crear las colas. Saliendo.\n");
         return 1;
     }
 
@@ -383,7 +383,6 @@ int main(){
 
         if (opcion == -1) { // Si la opcion leida no es valida
             printf("Opcion invalida. Por favor, ingrese un numero entre 0 y 5.\n");
-            // No necesitamos limpiar buffer aqui porque leerOpcion usa fgets
             continue; // Saltar al siguiente ciclo
         }
         printf("\n");
