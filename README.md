@@ -19,16 +19,10 @@ Asegúrate de tener todos estos archivos en la misma carpeta:
 
 ### 3. Compilar y ejecutar (Ejemplo con GCC)
 
-**En terminal (Linux/Mac):**
+**En terminal bash:**
 ```bash
 gcc main.c estructuras.c -o tarea1
 ./tarea1
-```
-
-**En Windows CMD o PowerShell:**
-```bash
-gcc main.c estructuras.c -o tarea1.exe
-tarea1.exe
 ```
 
 Si estás usando VSCode, asegúrate de compilar *ambos* archivos (`main.c` y `estructuras.c`), no solo uno.
@@ -90,4 +84,7 @@ Ticket procesado y eliminado de la cola.
 
 --- MENÚ PRINCIPAL ---
 0. Salir
+Saliendo del programa...
+Liberando memoria de tickets restantes.
+Fin del programa!
 ```
