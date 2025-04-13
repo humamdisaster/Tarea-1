@@ -8,6 +8,7 @@
 // --- Constantes ---
 #define MAX_DESC 300       // Maximo largo para la descripcion de un ticket
 #define MAX_PRIO 10        // Maximo largo para el string de prioridad ("Alta", "Media", "Bajo")
+#define MAX_ID 50       // Maximo largo para el ID del ticket (en caso de que se use un string)
 #define TIME_FORMAT "%Y-%m-%d %H:%M:%S" // Formato para mostrar la fecha y hora
 #define TIME_BUFFER_SIZE 20 // Tamaño del buffer para guardar la fecha como texto
 
@@ -15,7 +16,7 @@
 
 // Estructura para representar un ticket de soporte
 typedef struct Ticket {
-    int id;                     // Identificador unico del ticket
+    char id[MAX_ID];                     // Identificador unico del ticket
     char descripcion[MAX_DESC]; // Descripcion del problema
     char prioridad[MAX_PRIO];   // Prioridad ("Alto", "Media", "Bajo")
     time_t horaRegistro;        // Momento en que se creo el ticket
@@ -27,8 +28,6 @@ typedef struct Ticket {
 Queue *colaAlto = NULL;
 Queue *colaMedio = NULL;
 Queue *colaBajo = NULL;
-// Contador para asignar IDs unicos a los tickets nuevos
-int proxId = 1;
 
 // --- Funciones Auxiliares ---
 
@@ -69,11 +68,22 @@ void registrarTicket(){
     }
 
     char bufferDesc[MAX_DESC]; // Buffer temporal para leer la descripcion
-
-    // Asignamos el proximo ID disponible y lo incrementamos para el siguiente
-    nuevoTicket->id = proxId++;
-
+    char bufferId[MAX_ID]; // Buffer temporal para leer el ID
  
+    printf ("Ingrese el ID del ticket (maximo %d caracteres): ", MAX_ID);
+    if (fgets(bufferId, sizeof(bufferId), stdin) != NULL) {
+        // Quitamos el salto de linea ('\n') que deja fgets al final
+        bufferId[strcspn(bufferId, "\n")] = '\0';
+        // Copiamos el ID al ticket (con cuidado de no pasarnos del limite)
+        strncpy(nuevoTicket->id, bufferId, MAX_ID);
+        nuevoTicket->id[MAX_ID - 1] = '\0'; // Importante: asegurar que termine en nulo
+    } else {
+        // Si hubo un error leyendo, avisamos y liberamos la memoria
+        printf("Error al leer el ID del ticket.\n");
+        free(nuevoTicket); // Liberar memoria reservada si no se pudo completar
+        return;
+    }
+
     // Pedimos la descripcion al usuario
     printf("Ingrese la descripcion del ticket (maximo %d caracteres): ", MAX_DESC);
     if (fgets(bufferDesc, sizeof(bufferDesc), stdin) != NULL) {
@@ -180,19 +190,19 @@ void procesarNextTicket(){
 
 // 5. Busca un ticket por su ID en todas las colas y muestra sus detalles si lo encuentra
 void buscarYMostrarTicketPorId(){
-    int idBuscar; // El ID que ingresara el usuario
+    char idBuscar[MAX_ID]; // El ID que ingresara el usuario
     Ticket *ticketEncontrado = NULL; // Para guardar el puntero si lo encontramos
     // Un array con punteros a nuestras colas para poder recorrerlas facilmente
     Queue *colas[] = {colaAlto, colaMedio, colaBajo};
 
     printf("Ingrese el ID del ticket a buscar: ");
-    if (scanf("%d", &idBuscar) != 1) {
-        // Validacion basica de entrada
+    // Validacion basica de entrada
+    if (fghets(idBuscar, sizeof(idBuscar), stdin) != NULL) {
+        idBuscar[strcspn(idBuscar, "\n")] = '\0'; // Limpiar el salto de linea
+    } else {
         printf("Error al leer el ID del ticket.\n");
         return;
     }
-    getchar(); // Limpiar el buffer de entrada
-
     // Recorremos cada una de las colas (Alta, Media, Baja)
     for (int i = 0; i < 3; i++) {
         Queue *colaActual = colas[i];
@@ -204,7 +214,7 @@ void buscarYMostrarTicketPorId(){
         while (data != NULL) {
             Ticket *ticket = (Ticket *)data; // Convertimos a Ticket*
             // Comparamos el ID del ticket actual con el buscado
-            if (ticket->id == idBuscar) {
+            if (strcmp(ticket->id, idBuscar) == 0) {
                 ticketEncontrado = ticket; // Guardamos el puntero
                 break; // Salimos del while, ya no necesitamos buscar en esta cola
             }
@@ -220,7 +230,7 @@ void buscarYMostrarTicketPorId(){
         printf("Ticket encontrado:\n");
         mostrarDetallesTicket(ticketEncontrado);
     } else {
-        printf("No se encontro un ticket con ID %d.\n", idBuscar);
+        printf("No se encontro un ticket con ID %s.\n", idBuscar);
     }
     printf("================================\n");
 }
@@ -321,9 +331,25 @@ void liberarColas(){
     }
 }
 
+int leerOpcion(){
+    char linea[100]; // Buffer para leer la entrada
+    int opcion; // Variable para guardar la opcion leida
+
+    if (fgets(linea, sizeof(linea), stdin) != NULL) {
+        // Convertimos la cadena leida a un entero
+        if (sscanf(linea, "%d", &opcion) == 1) {
+            if (opcion >= 0 && opcion <= 5) {
+                return opcion; // Retornamos la opcion si es valida
+            }
+        }
+    }
+    return -1; // Opcion invalida
+}
+
 // --- Funcion Principal ---
 int main(){
     int opcion; // Para guardar la opcion del menu elegida por el usuario
+
 
     // Creamos las tres colas usando la funcion de la libreria
     colaAlto = createQueue();
@@ -351,14 +377,13 @@ int main(){
         printf("Seleccione una opcion: ");
 
         // Leemos la opcion del usuario y validamos que sea un numero
-        if (scanf("%d", &opcion) != 1) {
-            printf("Opcion invalida. Por favor, ingrese un numero.\n");
-            getchar();
+        opcion = leerOpcion();
+        if (opcion == -1) {
+            printf("Opcion invalida. Por favor, ingrese un numero entre 0 y 5.\n");
             continue;
         }
-        getchar();
-
         printf("\n");
+
         // Ejecutamos la accion correspondiente a la opcion elegida
         switch(opcion){
             case 1:
