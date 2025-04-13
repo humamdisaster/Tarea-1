@@ -1,6 +1,6 @@
 # Tarea 1 - Sistema de Gestión de Tickets
 
-Este programa simula un sistema de soporte técnico donde se pueden registrar, listar y procesar tickets con diferentes prioridades (Alta, Media, Baja). Utiliza estructuras de datos como listas y colas implementadas a través de TDA (Tipos de Datos Abstractos) proporcionados en archivos separados.
+Este programa simula un sistema de soporte técnico donde se pueden registrar, listar y procesar tickets con diferentes prioridades (Alta, Media, Baja). Utiliza estructuras de datos como listas y colas implementadas a través de TDA proporcionados en archivos separados.
 
 ---
 
@@ -62,7 +62,7 @@ Si estás usando VSCode, asegúrate de compilar *ambos* archivos (`main.c` y `es
 ---
 
 ### Limitaciones / A Considerar
-IDs: El ID del ticket es un texto ingresado por el usuario. El sistema verifica que el ID no esté repetido al momento de registrar un nuevo ticket. Se recomienda usar IDs consistentes.
+IDs: El ID del ticket es un texto ingresado por el usuario. El sistema verifica que el ID no esté repetido al momento de registrar un nuevo ticket.
 Persistencia: Los tickets registrados se pierden cuando el programa se cierra. No se guardan en archivos.
 ---
 
