@@ -1,4 +1,4 @@
-# Tarea 1 - Sistema de Gestión de Tickets
+# Tarea 1 Anyara Guajardo - Sistema de Gestión de Tickets
 
 Este programa simula un sistema de soporte técnico donde se pueden registrar, listar y procesar tickets con diferentes prioridades (Alta, Media, Baja). Utiliza estructuras de datos como listas y colas implementadas a través de TDA proporcionados en archivos separados.
 
